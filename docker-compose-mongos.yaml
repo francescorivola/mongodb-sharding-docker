@@ -1,0 +1,10 @@
+version: "3"
+services:
+  rs-mongos:
+    image: mongo:4.4.2
+    expose:
+    - 27020
+    ports:
+      - 27020:27020
+    restart: always
+    entrypoint: [ "/usr/bin/mongos", "--bind_ip_all", "--port", "27020", "--configdb", "rs-config/rs-config-01:27017,rs-config-02:27018,rs-config-03:27019" ]
