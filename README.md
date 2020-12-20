@@ -1,6 +1,6 @@
 # mongodb-sharding-docker
 
-This repo contains a docker-compose to play with Mongodb sharding. It has been created following the Mongodb official documentation guide to [convert a replica set to a replicated shard cluster](https://docs.mongodb.com/manual/tutorial/convert-replica-set-to-replicated-shard-cluster/). 
+This repo contains a docker-compose to play with MongoDB Sharding. It has been created following the MongoDB official documentation guide to [convert a replica set to a replicated shard cluster](https://docs.mongodb.com/manual/tutorial/convert-replica-set-to-replicated-shard-cluster/). 
 
 Step 1: start the mongo databases
 
