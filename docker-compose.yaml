@@ -1,10 +1,9 @@
-version: "3"
+version: "3.2"
 services:
+
   # rs-sh1
   rs-sh1-01:
     image: mongo:4.4.2
-    environment:
-      - MONGO_DATA_DIR=/data/db
     volumes:
       - rs-sh1-01:/data/db
     expose:
@@ -14,8 +13,6 @@ services:
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--port", "27011", "--replSet", "rs-sh1", "--shardsvr" ]
   rs-sh1-02:
     image: mongo:4.4.2
-    environment:
-      - MONGO_DATA_DIR=/data/db
     volumes:
       - rs-sh1-02:/data/db
     expose:
@@ -25,8 +22,6 @@ services:
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--port", "27012", "--replSet", "rs-sh1", "--shardsvr" ]
   rs-sh1-03:
     image: mongo:4.4.2
-    environment:
-      - MONGO_DATA_DIR=/data/db
     volumes:
       - rs-sh1-03:/data/db
     expose:
@@ -34,11 +29,10 @@ services:
     ports:
     - 27013:27013
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--port", "27013", "--replSet", "rs-sh1", "--shardsvr" ]
+
   # rs-sh2
   rs-sh2-01:
     image: mongo:4.4.2
-    environment:
-      - MONGO_DATA_DIR=/data/db
     volumes:
       - rs-sh2-01:/data/db
     expose:
@@ -48,8 +42,6 @@ services:
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--port", "27014", "--replSet", "rs-sh2", "--shardsvr" ]
   rs-sh2-02:
     image: mongo:4.4.2
-    environment:
-      - MONGO_DATA_DIR=/data/db
     volumes:
       - rs-sh2-02:/data/db
     expose:
@@ -59,8 +51,6 @@ services:
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--port", "27015", "--replSet", "rs-sh2", "--shardsvr" ]
   rs-sh2-03:
     image: mongo:4.4.2
-    environment:
-      - MONGO_DATA_DIR=/data/db
     volumes:
       - rs-sh2-03:/data/db
     expose:
@@ -68,13 +58,12 @@ services:
     ports:
     - 27016:27016
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--port", "27016", "--replSet", "rs-sh2", "--shardsvr" ]
+
   # rs-config
   rs-config-01:
     image: mongo:4.4.2
-    environment:
-      - MONGO_DATA_DIR=/data/db
     volumes:
-      - rs-config-01:/data/db
+      - rs-config-01:/data/configdb
     expose:
     - 27017
     ports:
@@ -82,10 +71,8 @@ services:
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--port", "27017", "--replSet", "rs-config", "--configsvr" ]
   rs-config-02:
     image: mongo:4.4.2
-    environment:
-      - MONGO_DATA_DIR=/data/db
     volumes:
-      - rs-config-02:/data/db
+      - rs-config-02:/data/configdb
     expose:
     - 27018
     ports:
@@ -93,15 +80,14 @@ services:
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--port", "27018", "--replSet", "rs-config", "--configsvr" ]
   rs-config-03:
     image: mongo:4.4.2
-    environment:
-      - MONGO_DATA_DIR=/data/db
     volumes:
-      - rs-config-03:/data/db
+      - rs-config-03:/data/configdb
     expose:
     - 27019
     ports:
     - 27019:27019
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--port", "27019", "--replSet", "rs-config", "--configsvr" ]
+
   # rs-mongos
   rs-mongos:
     image: mongo:4.4.2
