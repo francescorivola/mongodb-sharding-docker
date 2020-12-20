@@ -1,25 +1,34 @@
 # mongodb-sharding-docker
 
-This repo contains a docker-compose to play with MongoDB Sharding. It has been created following the MongoDB official documentation guide to [convert a replica set to a replicated shard cluster](https://docs.mongodb.com/manual/tutorial/convert-replica-set-to-replicated-shard-cluster/). 
+This repo contains a docker-compose to play with MongoDB Sharding. It has been created following the MongoDB official documentation guide to [convert a replica set to a replicated shard cluster](https://docs.mongodb.com/manual/tutorial/convert-replica-set-to-replicated-shard-cluster/).
 
-Step 1: start the mongo databases
+The docker-compose allow you to setup and run a replicated shard cluster composed by 2 replicated shards (each replica set composed by 3 data-bearing members) and a replicated config server (composed by 3 config servers). Finally a mongos container as entry point of our shard cluster.
+
+## Setup first Replica Set
+
+Run the following docker-compose command to start the 3 data bearing nodes of the rs-sh1 replica set.
 
 ```sh
-docker-compose up
-or
-docker-compose up -d
+docker-compose up -d rs-sh1-01 rs-sh1-02 rs-sh1-03
 ```
 
-Step 2: exec into one of the mongos:
+Now, we have to initialize the replica set rs-sh1.
 
+### Attach shell to rs-sh1-01
+
+```
 docker exec -it rs-sh1-01 /bin/bash
-Step 3: access mongo console
+```
+
+### Log in mongo shell
 
 ```sh
 mongo --port 27011
 ```
 
-Step 4: configure replica set by pasting the following
+### Initialize replica set
+
+Run the following command to initialize the replica set
 
 ```javascript
 rs.initiate(
@@ -34,24 +43,31 @@ rs.initiate(
 )
 ```
 
-Etc hosts entries
-```
-127.0.0.1       rs-sh1-01
-127.0.0.1       rs-sh1-02
-127.0.0.1       rs-sh1-03
-127.0.0.1       rs-sh2-01
-127.0.0.1       rs-sh2-02
-127.0.0.1       rs-sh2-03
-127.0.0.1       rs-config-01
-127.0.0.1       rs-config-02
-127.0.0.1       rs-config-03
+## Setup Config Replica Set
+
+Run the following docker-compose command to start the 3 config servers of the rs-config replica set.
+
+```sh
+docker-compose up -d rs-config-01 rs-config-02 rs-config-03
 ```
 
+Now, we have to initialize the replica set rs-config.
 
+### Attach shell to rs-config-01
 
+```sh
+docker exec -it rs-config-01 /bin/bash
+```
 
+### Log in mongo shell
 
-For config replica set
+```sh
+mongo --port 27017
+```
+
+### Initialize replica set
+
+Run the following command to initialize the replica set
 
 ```javascript
 rs.initiate(
@@ -67,10 +83,60 @@ rs.initiate(
 )
 ```
 
+## Run mongos
+
+Run the following docker-compose command to start the container running the mongos process.
+
+```sh
+docker-compose up -d rs-mongos
+```
+
+### Attach shell to rs-mongos
+
+```sh
+docker exec -it rs-mongos /bin/bash
+```
+
+### Log in mongo shell
+
+```sh
+mongo --port 27020
+```
+
+## Add rs-sh1 to the shard cluster
+
+Inside the mongos shell run the following command
+
 ```javascript
 use admin
-sh.addShard( "rs-sh1/rs-sh1-01:27011,rs-sh1-02:27012,rs-sh1-03:27013" )
+sh.addShard("rs-sh1/rs-sh1-01:27011,rs-sh1-02:27012,rs-sh1-03:27013");
 ```
+
+## Setup Config Replica Set rs-sh2
+
+Run the following docker-compose command to start the 3 data-bearing nodes of the rs-sh2 replica set.
+
+```sh
+docker-compose up -d rs-sh2-01 rs-sh2-02 rs-sh2-03
+```
+
+Now, we have to initialize the replica set rs-sh2.
+
+### Attach shell to rs-sh2-01
+
+```sh
+docker exec -it rs-sh2-01 /bin/bash
+```
+
+### Log in mongo shell
+
+```sh
+mongo --port 27014
+```
+
+### Initialize replica set
+
+Run the following command to initialize the replica set
 
 ```javascript
 rs.initiate(
@@ -85,29 +151,51 @@ rs.initiate(
 )
 ```
 
+## Add rs-sh2 to the shard cluster
+
+Inside the mongos shell run the following command:
 
 ```javascript
 use admin
-sh.addShard( "rs-sh2/rs-sh2-01:27014,rs-sh2-02:27015,rs-sh2-03:27016" )
+sh.addShard("rs-sh2/rs-sh2-01:27014,rs-sh2-02:27015,rs-sh2-03:27016");
 ```
 
-Enabled shard at database level
+## Enabled shard at database level
+
+From the mongos shell run the following command:
 
 ```javascript
 sh.enableSharding( "test" )
 ```
 
-Shard a collection
+## Shard a collection
 
 Create index for partition key
 
-```
+```javascript
 use test
 db.messages.createIndex( { type : 1 } )
 ```
 
 Let's shard a collection
-```
+
+```javascript
 use test
 sh.shardCollection( "test.messages", { "type" : 1 } )
+```
+
+## Configure /etc/hosts
+
+In order to connect to our replica sets from the docker host you can add the following entries in our /etc/hosts file:
+
+```
+127.0.0.1       rs-sh1-01
+127.0.0.1       rs-sh1-02
+127.0.0.1       rs-sh1-03
+127.0.0.1       rs-sh2-01
+127.0.0.1       rs-sh2-02
+127.0.0.1       rs-sh2-03
+127.0.0.1       rs-config-01
+127.0.0.1       rs-config-02
+127.0.0.1       rs-config-03
 ```
