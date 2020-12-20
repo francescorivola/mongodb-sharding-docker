@@ -6,7 +6,7 @@ services:
     environment:
       - MONGO_DATA_DIR=/data/db
     volumes:
-      - ./rs-sh1-01:/data/db
+      - rs-sh1-01:/data/db
     expose:
     - 27011
     ports:
@@ -17,7 +17,7 @@ services:
     environment:
       - MONGO_DATA_DIR=/data/db
     volumes:
-      - ./rs-sh1-02:/data/db
+      - rs-sh1-02:/data/db
     expose:
     - 27012
     ports:
@@ -28,7 +28,7 @@ services:
     environment:
       - MONGO_DATA_DIR=/data/db
     volumes:
-      - ./rs-sh1-03:/data/db
+      - rs-sh1-03:/data/db
     expose:
     - 27013
     ports:
@@ -40,7 +40,7 @@ services:
     environment:
       - MONGO_DATA_DIR=/data/db
     volumes:
-      - ./rs-sh2-01:/data/db
+      - rs-sh2-01:/data/db
     expose:
     - 27014
     ports:
@@ -51,7 +51,7 @@ services:
     environment:
       - MONGO_DATA_DIR=/data/db
     volumes:
-      - ./rs-sh2-02:/data/db
+      - rs-sh2-02:/data/db
     expose:
     - 27015
     ports:
@@ -62,7 +62,7 @@ services:
     environment:
       - MONGO_DATA_DIR=/data/db
     volumes:
-      - ./rs-sh2-03:/data/db
+      - rs-sh2-03:/data/db
     expose:
     - 27016
     ports:
@@ -74,7 +74,7 @@ services:
     environment:
       - MONGO_DATA_DIR=/data/db
     volumes:
-      - ./rs-config-01:/data/db
+      - rs-config-01:/data/db
     expose:
     - 27017
     ports:
@@ -85,7 +85,7 @@ services:
     environment:
       - MONGO_DATA_DIR=/data/db
     volumes:
-      - ./rs-config-02:/data/db
+      - rs-config-02:/data/db
     expose:
     - 27018
     ports:
@@ -96,7 +96,7 @@ services:
     environment:
       - MONGO_DATA_DIR=/data/db
     volumes:
-      - ./rs-config-03:/data/db
+      - rs-config-03:/data/db
     expose:
     - 27019
     ports:
@@ -110,3 +110,13 @@ services:
     ports:
       - 27020:27020
     entrypoint: [ "/usr/bin/mongos", "--bind_ip_all", "--port", "27020", "--configdb", "rs-config/rs-config-01:27017,rs-config-02:27018,rs-config-03:27019" ]
+volumes:
+  rs-sh1-01:
+  rs-sh1-02:
+  rs-sh1-03:
+  rs-sh2-01:
+  rs-sh2-02:
+  rs-sh2-03:
+  rs-config-01:
+  rs-config-02:
+  rs-config-03:
