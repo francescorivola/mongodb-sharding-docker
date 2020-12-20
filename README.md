@@ -241,7 +241,7 @@ Remove all containers and named volumes
 docker-compose down -v
 ```
 
-Remove also mongodb image
+Remove all containers, named volumes and mongodb image
 
 ```sh
 docker-compose down -v -rmi
