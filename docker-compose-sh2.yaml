@@ -10,7 +10,6 @@ services:
     - 27014
     ports:
       - 27014:27014
-    restart: always
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--port", "27014", "--replSet", "rs-sh2", "--shardsvr" ]
   rs-sh2-02:
     image: mongo:4.4.2
@@ -22,7 +21,6 @@ services:
     - 27015
     ports:
     - 27015:27015
-    restart: always
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--port", "27015", "--replSet", "rs-sh2", "--shardsvr" ]
   rs-sh2-03:
     image: mongo:4.4.2
@@ -34,5 +32,4 @@ services:
     - 27016
     ports:
     - 27016:27016
-    restart: always
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--port", "27016", "--replSet", "rs-sh2", "--shardsvr" ]
