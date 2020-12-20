@@ -4,6 +4,7 @@ services:
   # rs-sh1
   rs-sh1-01:
     image: mongo:4.4.2
+    container_name: rs-sh1-01
     volumes:
       - rs-sh1-01:/data/db
     expose:
@@ -13,6 +14,7 @@ services:
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--port", "27011", "--replSet", "rs-sh1", "--shardsvr" ]
   rs-sh1-02:
     image: mongo:4.4.2
+    container_name: rs-sh1-02
     volumes:
       - rs-sh1-02:/data/db
     expose:
@@ -22,6 +24,7 @@ services:
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--port", "27012", "--replSet", "rs-sh1", "--shardsvr" ]
   rs-sh1-03:
     image: mongo:4.4.2
+    container_name: rs-sh1-03
     volumes:
       - rs-sh1-03:/data/db
     expose:
@@ -33,6 +36,7 @@ services:
   # rs-sh2
   rs-sh2-01:
     image: mongo:4.4.2
+    container_name: rs-sh2-01
     volumes:
       - rs-sh2-01:/data/db
     expose:
@@ -42,6 +46,7 @@ services:
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--port", "27014", "--replSet", "rs-sh2", "--shardsvr" ]
   rs-sh2-02:
     image: mongo:4.4.2
+    container_name: rs-sh2-02
     volumes:
       - rs-sh2-02:/data/db
     expose:
@@ -51,6 +56,7 @@ services:
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--port", "27015", "--replSet", "rs-sh2", "--shardsvr" ]
   rs-sh2-03:
     image: mongo:4.4.2
+    container_name: rs-sh2-03
     volumes:
       - rs-sh2-03:/data/db
     expose:
@@ -62,6 +68,7 @@ services:
   # rs-config
   rs-config-01:
     image: mongo:4.4.2
+    container_name: rs-config-01
     volumes:
       - rs-config-01:/data/configdb
     expose:
@@ -71,6 +78,7 @@ services:
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--port", "27017", "--replSet", "rs-config", "--configsvr" ]
   rs-config-02:
     image: mongo:4.4.2
+    container_name: rs-config-02
     volumes:
       - rs-config-02:/data/configdb
     expose:
@@ -80,6 +88,7 @@ services:
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--port", "27018", "--replSet", "rs-config", "--configsvr" ]
   rs-config-03:
     image: mongo:4.4.2
+    container_name: rs-config-03
     volumes:
       - rs-config-03:/data/configdb
     expose:
@@ -91,6 +100,7 @@ services:
   # rs-mongos
   rs-mongos:
     image: mongo:4.4.2
+    container_name: rs-mongos
     expose:
     - 27020
     ports:
