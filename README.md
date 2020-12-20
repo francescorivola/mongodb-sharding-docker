@@ -200,3 +200,49 @@ In order to connect to our replica sets from the docker host you can add the fol
 127.0.0.1       rs-config-02
 127.0.0.1       rs-config-03
 ```
+
+## Connection strings
+
+replica set sh1
+
+```
+mongodb://rs-sh1-01:27011,rs-sh1-02:27012,rs-sh1-03:27013/?replicaSet=rs-sh1
+```
+
+replica set sh2
+
+```
+mongodb://rs-sh2-01:27014,rs-sh2-02:27015,rs-sh2-03:27016/?replicaSet=rs-sh2
+```
+
+replica set config
+
+```
+mongodb://rs-config-01:27017,rs-config-02:27018,rs-config-03:27019/?replicaSet=rs-config
+```
+
+mongos
+
+```
+mongodb://localhost:27020
+```
+
+## Clean up
+
+Remove all containers and network
+
+```sh
+docker-compose down
+```
+
+Remove all containers and named volumes
+
+```sh
+docker-compose down -v
+```
+
+Remove also mongodb image
+
+```sh
+docker-compose down -v -rmi
+```
