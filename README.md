@@ -1,5 +1,7 @@
 # mongodb-sharding-docker
 
+This repo contains a docker-compose to play with Mongodb sharding. It has been created following the Mongodb official documentation guide to [convert a replica set to a replicated shard cluster](https://docs.mongodb.com/manual/tutorial/convert-replica-set-to-replicated-shard-cluster/). 
+
 Step 1: start the mongo databases
 
 ```sh
@@ -45,22 +47,9 @@ Etc hosts entries
 127.0.0.1       rs-config-03
 ```
 
-https://docs.mongodb.com/manual/tutorial/convert-replica-set-to-replicated-shard-cluster/
 
-For PSA architecture
 
-```javascript
-rs.initiate(
-  {
-    _id : 'rs-sh1',
-    members: [
-      { _id : 0, host : "rs-sh1-01:27011" },
-      { _id : 1, host : "rs-sh1-02:27012" },
-      { _id : 2, host : "rs-sh1-03:27013", arbiterOnly: true }
-    ]
-  }
-)
-```
+
 
 For config replica set
 
