@@ -2,7 +2,7 @@
 
 This repo contains a docker-compose to play with MongoDB Sharding. It has been created following the MongoDB official documentation guide to [convert a replica set to a replicated shard cluster](https://docs.mongodb.com/manual/tutorial/convert-replica-set-to-replicated-shard-cluster/).
 
-The docker-compose allow you to setup and run a replicated shard cluster composed by 2 replicated shards (each replica set composed by 3 data-bearing members) and a replicated config server (composed by 3 config servers). Finally a mongos container as entry point of our shard cluster.
+The docker-compose allows you to setup and run a replicated shard cluster composed by 2 replicated shards (each replica set composed by 3 data-bearing members) and a replicated config server (composed by 3 config servers). Finally a mongos container as entry point of our shard cluster.
 
 ## Setup first Replica Set
 
