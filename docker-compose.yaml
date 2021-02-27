@@ -106,6 +106,39 @@ services:
     ports:
       - 27020:27020
     entrypoint: [ "/usr/bin/mongos", "--bind_ip_all", "--port", "27020", "--configdb", "rs-config/rs-config-01:27017,rs-config-02:27018,rs-config-03:27019" ]
+
+  # rs-sh3
+  rs-sh3-01:
+    image: mongo:4.4.4
+    container_name: rs-sh3-01
+    volumes:
+      - rs-sh3-01:/data/db
+    expose:
+    - 27021
+    ports:
+      - 27021:27021
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--port", "27021", "--replSet", "rs-sh3", "--shardsvr" ]
+  rs-sh3-02:
+    image: mongo:4.4.4
+    container_name: rs-sh3-02
+    volumes:
+      - rs-sh3-02:/data/db
+    expose:
+    - 27022
+    ports:
+    - 27022:27022
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--port", "27022", "--replSet", "rs-sh3", "--shardsvr" ]
+  rs-sh3-03:
+    image: mongo:4.4.4
+    container_name: rs-sh3-03
+    volumes:
+      - rs-sh3-03:/data/db
+    expose:
+    - 27023
+    ports:
+    - 27023:27023
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--port", "27023", "--replSet", "rs-sh3", "--shardsvr" ]
+
 volumes:
   rs-sh1-01:
   rs-sh1-02:
@@ -116,3 +149,6 @@ volumes:
   rs-config-01:
   rs-config-02:
   rs-config-03:
+  rs-sh3-01:
+  rs-sh3-02:
+  rs-sh3-03:
